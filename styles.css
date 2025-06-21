@@ -1,0 +1,84 @@
+body {
+    background-color: #15142b;
+    background-image: linear-gradient(180deg, #372991, #15142b);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+#container, #structure-container {
+    background-color: white;
+    width: 570px;
+    margin: 20px auto;
+    padding: 15px;
+    border-radius: 3%;
+    overflow: auto; /* evita vazamento */
+    height: auto; 
+}
+
+form {
+    background-color: #E6E1EF;
+    padding: 15px;
+    width: 89%;
+    border-radius: 3%;
+}
+
+#dividendLabel, #divisorLabel {
+    background-color: #D1C9E0;
+    padding: 3px;
+    border-radius: 3px;
+}
+
+#dividend, #divisor {
+    margin-top: 9px;
+    width: 98%;
+    height: 25px;
+    margin-bottom: 10px;
+}
+
+button[type="submit"] {
+    background-color: #60cc64;
+    color: white;
+    border: none;
+    padding: 7px;
+    width: 100%;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+h2 {
+    color: purple;
+}
+
+#calculation-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 0.1fr 1fr;
+}
+
+.operands-container {
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+    font-size: 40px;
+}
+
+#divisor-container {
+    border-left: 3px solid black;
+    border-bottom: 3px solid black;
+}
+
+#result-type {
+    background-color: #f2f2f2;
+    padding: 10px;
+    font-family: monospace;
+    font-size: 14px;
+    margin-top: 15px;
+    border-radius: 5px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+#remainder-container {
+    font-size: 30px;
+}
