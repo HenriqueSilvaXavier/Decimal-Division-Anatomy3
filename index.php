@@ -195,6 +195,8 @@ if ($d2 == 0) {
     </div>
     <?php endif; ?>
 </div>
+<button class="btn-export" onclick="exportImage()">📷 Export as Image</button>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <script>
 async function animar() {
   const paragrafos = document.querySelectorAll("#remainder-container p");
@@ -226,6 +228,21 @@ async function animar() {
 
 // ✅ Executa assim que o DOM estiver pronto
 document.addEventListener("DOMContentLoaded", animar);
+function exportImage() {
+    const alvo = document.getElementById("structure-container");
+
+    html2canvas(alvo, {
+        scrollY: -window.scrollY, // garante captura do topo mesmo com rolagem
+        windowWidth: document.documentElement.scrollWidth,
+        windowHeight: document.documentElement.scrollHeight
+    }).then(canvas => {
+        const link = document.createElement("a");
+        link.download = "division.png";
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+    });
+}
+</script>
 </script>
 
 </body>
