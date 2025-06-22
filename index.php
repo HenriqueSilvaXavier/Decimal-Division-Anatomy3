@@ -166,7 +166,7 @@ if ($d2 == 0) {
                     $space += ($digitLength - 1) * 10;
                     $space += 10;
                     if ($i === $totalSteps - 1) {
-                        $space += 10;
+                        $space += 6;
                         echo "<p style='display: none; margin-left: {$space}px; margin-top:-30px;'>{$step['remainder']}</p>";
                     } else {
                         echo "<p style='display: none; margin-left: {$space}px; margin-top:-30px;'>" . ($step['remainder'] * 10) . "</p>";
