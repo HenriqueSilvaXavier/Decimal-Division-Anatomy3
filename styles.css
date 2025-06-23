@@ -8,7 +8,7 @@ body {
 
 #container, #structure-container {
     background-color: white;
-    width: 570px;
+    width: 98%;
     margin: 20px auto;
     padding: 15px;
     border-radius: 3%;
@@ -19,7 +19,7 @@ body {
 form {
     background-color: #E6E1EF;
     padding: 15px;
-    width: 89%;
+    width: 97%;
     border-radius: 3%;
 }
 
@@ -57,17 +57,23 @@ h2 {
 }
 
 .operands-container {
-    padding: 30px;
-    display: flex;
-    justify-content: center;
-    font-size: 40px;
+    padding: 25px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    font-size: 30px;
+}
+#dividend-grid {
+    display: grid;
+    grid-template-columns: 33.3% 66.6%;
+    align-items: start;
+    column-gap: 0px;
+    height: 20px;
 }
 
-#divisor-container {
+#divisor-grid{
     border-left: 3px solid black;
     border-bottom: 3px solid black;
 }
-
 #result-type {
     background-color: #f2f2f2;
     padding: 10px;
@@ -79,8 +85,13 @@ h2 {
     overflow-y: auto;
 }
 
-#remainder-container {
+#remainder-grid {
     font-size: 30px;
+    margin-top: -80px;
+    display: grid;
+    grid-template-columns: 33.3% 66.6%;
+    align-items: start;
+    column-gap: 0px;
 }
 .btn-export {
     margin: 20px auto;
