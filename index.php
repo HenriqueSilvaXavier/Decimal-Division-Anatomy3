@@ -33,6 +33,15 @@ if ($d2 == 0) {
     $quotient = "Error";
     $remainder = "Error";
 } else {
+    $wasScaled = false;
+    $scaleCount = 0;
+    while (fmod($d1, 1) != 0 || fmod($d2, 1) != 0) {
+        $d1 *= 10;
+        $d2 *= 10;
+        $wasScaled = true;
+        $scaleCount++;
+    }
+
     $isRepeating = isRepeatingDecimal($d1, $d2);
 
     $integerPart = intdiv($d1, $d2);
@@ -136,48 +145,58 @@ if ($d2 == 0) {
 
         <button type="submit">Calculate</button>
     </form>
+    <?php if ($wasScaled): ?>
+        <p style="color: orange; font-weight: bold; margin-top: 10px;">
+            Note: The dividend and divisor were multiplied by 10 (<?= $scaleCount ?> time<?= $scaleCount > 1 ? "s" : "" ?>) 
+        to eliminate decimal points and allow manual division with whole numbers.
+        </p>
+    <?php endif; ?>
 </div>
 
 <div id="structure-container">
     <h2>Division Steps</h2>
     <div id="calculation-container">
-        <div id="dividend-container" class="operands-container"><?= $d1 ?></div>
-        <div id="divisor-container" class="operands-container"><?= $d2 ?></div>
-        <div id="remainder-container">
-            <?php
-                $space = 117;
-                $totalSteps = count($subtractions);
-
-                for ($i = 0; $i < $totalSteps; $i++) {
-                    $step = $subtractions[$i];
-
-                    if (isset($remainderBackup) && strlen((string)$step['multiplication']) < strlen((string)$remainderBackup)) {
-                        $space += 15;
-                    }
-
-                    $width = strlen((string)$step['multiplication']) * 25;
-                    echo "<p style='display: none; width: {$width}px; margin-left: {$space}px; margin-top:-30px; border-bottom: 3px solid black;'>-" . $step['multiplication'] . "</p>";
-
-                    if (isset($remainderBackup) && strlen((string)$step['multiplication']) < strlen((string)$remainderBackup)) {
-                        $space -= 10;
-                    }
-
-                    $digitLength = strlen((string)abs($step['multiplication']));
-                    $space += ($digitLength - 1) * 10;
-                    $space += 10;
-                    if ($i === $totalSteps - 1) {
-                        $space += 6;
-                        echo "<p style='display: none; margin-left: {$space}px; margin-top:-30px;'>{$step['remainder']}</p>";
-                    } else {
-                        echo "<p style='display: none; margin-left: {$space}px; margin-top:-30px;'>" . ($step['remainder'] * 10) . "</p>";
-                    }
-
-                    $space -= 8;
-                    $remainderBackup = $step['remainder'] * 10;
-                }
-            ?>
+        <div id="dividend-grid" class="operands-container">
+            <div></div>
+            <div id="dividend-container"><?= $d1 ?></div>
         </div>
+        <div id="divisor-grid" class="operands-container">
+            <div id="divisor-container" class="operands-container"><?= $d2 ?></div>
+        </div>
+        <div id="remainder-grid" class="operands-container">
+            <div></div>
+            <div id="remainder-container">
+                <?php
+                    $space = -10;
+                    $totalSteps = count($subtractions);
 
+                    for ($i = 0; $i < $totalSteps; $i++) {
+                        $step = $subtractions[$i];
+
+                        if (isset($remainderBackup) && strlen((string)$step['multiplication']) < strlen((string)$remainderBackup)) {
+                            $space += 15;
+                        }
+
+                        $width = strlen((string)$step['multiplication']) * 25;
+                        echo "<p style='display: none; width: {$width}px; margin-left: {$space}px; margin-top:-30px; border-bottom: 3px solid black;'>-" . $step['multiplication'] . "</p>";
+
+                        $digitLength = strlen((string)abs($step['multiplication']));
+                        if($step['multiplication']>0){
+                            $space += ($digitLength-strlen((string)$step['remainder'])) * 14.8;
+                        }
+                        $space+=10.14;
+                        if ($i === $totalSteps - 1) {
+                            echo "<p style='display: none; margin-left: {$space}px; margin-top:-30px;'>{$step['remainder']}</p>";
+                        } else {
+                            echo "<p style='display: none; margin-left: {$space}px; margin-top:-30px;'>" . ($step['remainder'] * 10) . "</p>";
+                        }
+
+                        $space -= 8;
+                        $remainderBackup = $step['remainder'] * 10;
+                    }
+                ?>
+            </div>
+        </div>
         <div id="quotient-container" class="operands-container" data-valor="<?= $quotient ?>"></div>
     </div>
 
@@ -197,6 +216,7 @@ if ($d2 == 0) {
 </div>
 <button class="btn-export" onclick="exportImage()">📷 Export as Image</button>
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
 <script>
 async function animar() {
   const paragrafos = document.querySelectorAll("#remainder-container p");
@@ -228,21 +248,6 @@ async function animar() {
 
 // ✅ Executa assim que o DOM estiver pronto
 document.addEventListener("DOMContentLoaded", animar);
-function exportImage() {
-    const alvo = document.getElementById("structure-container");
-
-    html2canvas(alvo, {
-        scrollY: -window.scrollY, // garante captura do topo mesmo com rolagem
-        windowWidth: document.documentElement.scrollWidth,
-        windowHeight: document.documentElement.scrollHeight
-    }).then(canvas => {
-        const link = document.createElement("a");
-        link.download = "division.png";
-        link.href = canvas.toDataURL("image/png");
-        link.click();
-    });
-}
-</script>
 </script>
 
 </body>
