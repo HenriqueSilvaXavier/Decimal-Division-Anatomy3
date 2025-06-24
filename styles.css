@@ -8,7 +8,7 @@ body {
 
 #container, #structure-container {
     background-color: white;
-    width: 98%;
+    width: 97%;
     margin: 20px auto;
     padding: 15px;
     border-radius: 3%;
@@ -53,7 +53,7 @@ h2 {
 #calculation-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 0.1fr 1fr;
+    grid-template-rows: 140px auto; /* primeira linha sempre com 100px */
 }
 
 .operands-container {
@@ -67,7 +67,6 @@ h2 {
     grid-template-columns: 33.3% 66.6%;
     align-items: start;
     column-gap: 0px;
-    height: 20px;
 }
 
 #divisor-grid{
