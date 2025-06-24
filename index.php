@@ -215,7 +215,9 @@ if ($d2 == 0) {
     <?php endif; ?>
 </div>
 <button class="btn-export" onclick="exportImage()">📷 Export as Image</button>
-<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
+<!-- Script html2canvas (CDN) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 <script>
 async function animar() {
@@ -248,6 +250,28 @@ async function animar() {
 
 // ✅ Executa assim que o DOM estiver pronto
 document.addEventListener("DOMContentLoaded", animar);
+
+function exportImage() {
+    const scrollableDiv = document.getElementById('structure-container');
+  
+    // Clonar o conteúdo inteiro, sem o scroll
+    const clone = scrollableDiv.cloneNode(true);
+    clone.style.width = scrollableDiv.scrollWidth + 'px';
+    clone.style.height = scrollableDiv.scrollHeight + 'px';
+    clone.style.overflow = 'visible';
+    clone.style.position = 'absolute';
+    clone.style.left = '-9999px'; // esconder da tela
+
+    document.body.appendChild(clone);
+
+    html2canvas(clone).then(canvas => {
+        const link = document.createElement('a');
+        link.download = 'division.png';
+        link.href = canvas.toDataURL();
+        link.click();
+        document.body.removeChild(clone);
+    });
+}
 </script>
 
 </body>
