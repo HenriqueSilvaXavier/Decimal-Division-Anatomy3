@@ -82,9 +82,6 @@ if ($d2 == 0) {
                     'multiplication' => $multiplication,
                     'remainder' => $remainder
                 ];
-                if ($multiplication == 0) {
-                    $zeroSubtractedAlready = true;
-                }
             }
 
             $digits[] = $digit;
